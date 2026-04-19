@@ -1,0 +1,55 @@
+{
+  "name": "fin-docs-index",
+  "fields": [
+    {
+      "name": "id",
+      "type": "Edm.String",
+      "key": true,
+      "searchable": true,
+      "retrievable": true,
+      "analyzer": "keyword"
+    },
+    {
+      "name": "parent_id",
+      "type": "Edm.String",
+      "searchable": false,
+      "retrievable": true
+    },
+    {
+      "name": "title",
+      "type": "Edm.String",
+      "searchable": true,
+      "retrievable": true
+    },
+    {
+      "name": "content",
+      "type": "Edm.String",
+      "searchable": true,
+      "retrievable": true,
+      "analyzer": "en.microsoft"
+    },
+    {
+      "name": "text_vector",
+      "type": "Collection(Edm.Single)",
+      "searchable": true,
+      "retrievable": true,
+      "dimensions": 1536,
+      "vectorSearchProfile": "fin-vector-profile"
+    }
+  ],
+  "vectorSearch": {
+    "algorithms": [{ "name": "fin-algorithm", "kind": "hnsw" }],
+    "profiles": [{ "name": "fin-vector-profile", "algorithm": "fin-algorithm" }]
+  },
+  "semantic": {
+    "configurations": [
+      {
+        "name": "fin-semantic-config",
+        "prioritizedFields": {
+          "titleField": { "fieldName": "title" },
+          "contentFields": [{ "fieldName": "content" }]
+        }
+      }
+    ]
+  }
+}
